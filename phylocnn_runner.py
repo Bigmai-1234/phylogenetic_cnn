@@ -68,14 +68,14 @@ class PhyloDAP(DeepLearningDAP):
         # Parameter for output layer
         nb_classes = self.experiment_data.nb_classes
 
-        data = Input(shape=(nb_features, 1), name="data", dtype=floatx())
+        data = Input(shape=(nb_features, 1), name="data", dtype=floatx()) #[batch, nb_features, 1] = (?, 65, 1)
         coordinates = Input(shape=(nb_coordinates, nb_features, 1),
-                            name="coordinates", dtype=floatx())
+                            name="coordinates", dtype=floatx())#[batch, pcs, otus, 1] = (?, 306, 65, 1)
 
         conv_layer = data
 
         # We remove the padding that we added to work around keras limitations
-        conv_crd = Lambda(lambda c: c[0], output_shape=lambda s: (s[1:]))(coordinates)
+        conv_crd = Lambda(lambda c: c[0], output_shape=lambda s: (s[1:]))(coordinates) # (306, 65, [1,...16])
 
         for nb_filters, nb_neighbors in zip(self.nb_filters, self.phylo_neighbours):
 
@@ -83,7 +83,7 @@ class PhyloDAP(DeepLearningDAP):
                 raise Exception("More neighbors than features, "
                                 "please use less neighbors or use more features")
 
-            distances = euclidean_distances(conv_crd)
+            distances = euclidean_distances(conv_crd) # (65, 65, [1,...16])
             conv_layer, conv_crd = PhyloConv1D(distances,
                                                nb_neighbors,
                                                nb_filters, activation='selu')([conv_layer, conv_crd])
@@ -95,6 +95,7 @@ class PhyloDAP(DeepLearningDAP):
                        activation="softmax", name='output')(drop)
 
         model = Model(inputs=[data, coordinates], outputs=output)
+
         return model
 
     @staticmethod
