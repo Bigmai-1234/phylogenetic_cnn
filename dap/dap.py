@@ -904,26 +904,32 @@ class DAP(ABC):
         base_output_folder = self._get_output_folder()
 
         # Select K-features according to the resulting ranking
+        # 以百分比挑选features_indices
+        # feature_ranges = [25, 50, 75, 100]
         k_features_indices = self._generate_feature_steps(self.experiment_data.nb_features)
 
-        for runstep in range(self.cv_n):
+        for runstep in range(self.cv_n): # 10轮
 
             # Save contextual information
             self._runstep_nb = runstep
 
             # 1. Generate K-Folds
             if self.is_stratified:
+                # 分层做K-Folds 数据切分，返回样本indices 集合
+                # len(kfold_indices) = 5
+                # kfold_indices[0] = [training_indices, validation_indices]
+
                 kfold_indices = mlpy.cv_kfold(n=self.experiment_data.nb_samples,
                                               k=self.cv_k, strat=self.y, seed=runstep)
             else:
                 kfold_indices = mlpy.cv_kfold(n=self.experiment_data.nb_samples,
                                               k=self.cv_k, seed=runstep)
 
+
             if verbose:
                 print('=' * 80)
                 print('{} over {} experiments'.format(runstep + 1, self.cv_n))
                 print('=' * 80)
-
 
 
             for fold, (training_indices, validation_indices) in enumerate(kfold_indices):
@@ -938,24 +944,32 @@ class DAP(ABC):
                     print('Experiment: {} - Fold {} over {} folds'.format(runstep + 1, fold + 1, self.cv_k))
 
                 # 2. Split data in Training and Validation sets
+                # 根据样本索引获取数据
                 (X_train, X_validation), (y_train, y_validation) = self._train_validation_split(training_indices,
                                                                                                 validation_indices)
                 # 2.1 Apply Feature Scaling (if needed)
+                # 数据归一化
                 if self.apply_feature_scaling:
                     if verbose:
                         print('-- centering and normalization using: {}'.format(self.feature_scaling_name))
                     X_train, X_validation = self._apply_scaling(X_train, X_validation)
 
                 # 3. Apply Feature Ranking
+                # k_best 输出Feature 排序（全量）
                 if verbose:
                     print('-- ranking the features using: {}'.format(self.feature_ranking_name))
                     print('=' * 80)
                 ranking = self._apply_feature_ranking(X_train, y_train, seed=runstep)
+
                 self.metrics[self.RANKINGS][self._iteration_step_nb] = ranking  # store ranking
 
                 # 4. Iterate over Feature Steps
+                # k_features_indices 按百分比选的 features数量
+                # [nums1,,,]
                 for step, nb_features in enumerate(k_features_indices):
                     # 4.1 Select Ranked Features
+                    # 获取前nums个Features，调整训练集和验证集。
+                    # 如果是rank了的话，那么大概率有部分Features（OTUs）一直不曾被选中
                     X_train_fs, X_val_fs = self._select_ranked_features(ranking[:nb_features], X_train, X_validation)
 
                     # Store contextual info about current number of features used in this iteration and

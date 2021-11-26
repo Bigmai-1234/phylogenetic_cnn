@@ -209,20 +209,37 @@ class PhyloDAP(DeepLearningDAP):
 
 def main():
 
-    datafile = settings.TRAINING_DATA_FILEPATH
-    labels_datafile = settings.TRAINING_LABELS_FILEPATH
-    coordinates_datafile = settings.COORDINATES_FILEPATH
-    test_datafile = settings.TEST_DATA_FILEPATH
-    test_label_datafile = settings.TEST_LABELS_FILEPATH
+    datafile = settings.TRAINING_DATA_FILEPATH # Sokol_16S_taxa_HS_CDf_commsamp_training.txt #[samples,OTUs] = [69,259]
+    labels_datafile = settings.TRAINING_LABELS_FILEPATH # Sokol_16S_taxa_HS_CDf_commsamp_training_lab.txt #[samples,] = [69,]
+    coordinates_datafile = settings.COORDINATES_FILEPATH # coordinates_cdf.txt #[pcs,OTUs] = [306, 259]
+    test_datafile = settings.TEST_DATA_FILEPATH # Sokol_16S_taxa_HS_CDf_commsamp_test.txt #[samples,OTUs] = [29,259]
+    test_label_datafile = settings.TEST_LABELS_FILEPATH # Sokol_16S_taxa_HS_CDf_commsamp_test_lab.txt#[samples,] = [29,]
 
     inputs = get_data(datafile, labels_datafile, coordinates_datafile,
                       test_datafile, test_label_datafile)
 
+    # coordinates:(69, 306, 259) = [samples, pcs, OTUs]
+    # feature_names : OTU_names
+    # coordinate_names : Pc_names[1,...,306]
+    # nb_coordinates : 306
+    # nb_samples : 62
+    # nb_features :259
+
+    dap = PhyloDAP(inputs, settings.DISEASE) # disease:CDf
+    # self._disease_name = "CDf"
+    # self.type_data = "ibd_dataset"
+    # self.total_nb_samples = '10000'
+    # self.nb_filters = [16,16]
+    # self.phylo_neighbours = [4,4]
 
 
-    dap = PhyloDAP(inputs, settings.DISEASE)
     # dap.save_configuration()
     trained_model = dap.run(verbose=True)
+
+
+
+
+
     dap.predict_on_test(trained_model)
 
     # This is just because the TensorFlow version that we are using crashes

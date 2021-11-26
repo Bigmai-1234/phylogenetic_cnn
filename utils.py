@@ -24,6 +24,7 @@ def get_data(datafile, labels_datafile, coordinates_datafile,
 
     _, _, Xs_test = load_datafile(test_datafile)
     ys_test = np.loadtxt(test_label_datafile, dtype=np.int)
+
     _, coordinate_names, coordinates = load_datafile(coordinates_datafile)
 
     # Keras needs that all the batch sizes are the same. And it is impossible at the
@@ -34,6 +35,13 @@ def get_data(datafile, labels_datafile, coordinates_datafile,
     all_coordinates = np.empty((Xs.shape[0],) + coordinates.shape, dtype=np.float64)
     for i in range(Xs.shape[0]):
         all_coordinates[i] = coordinates
+    # (69,)+(306,259) = (69, 306, 259) = [samples, pcs, OTUs]
+    # coordinates:(69, 306, 259) = [samples, pcs, OTUs]
+    # feature_names : OTU_names
+    # coordinate_names : Pc_names[1,...,306]
+    # nb_coordinates : 306
+    # nb_samples : 62
+    # nb_features :259
 
     inputs = Bunch()
     inputs.feature_names = feature_names
