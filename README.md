@@ -7,4 +7,4 @@
 - theano = 1.0.5 
 - mlpy = 3.5.0 
 
-![notes](../work/read_note.pdf)
+![notes](https://github.com/Bigmai-1234/phylogenetic_cnn/blob/main/work/read_note.pdf)
