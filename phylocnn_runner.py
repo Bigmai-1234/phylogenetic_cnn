@@ -93,7 +93,7 @@ class PhyloDAP(DeepLearningDAP):
         drop = Dropout(0.25)(Dense(units=64, activation='selu')(flatt))
         output = Dense(units=nb_classes, kernel_initializer="he_normal",
                        activation="softmax", name='output')(drop)
-
+        import pdb;pdb.set_trace()
         model = Model(inputs=[data, coordinates], outputs=output)
 
         return model

@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6a84a3be-25cd-4f65-8e88-1155f9f9e3d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phylocnn_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/phylocnn_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/read_note.drawio" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1637742179763</updated>
       <workItem from="1637742185591" duration="4909000" />
-      <workItem from="1637806879600" duration="15080000" />
+      <workItem from="1637806879600" duration="17445000" />
     </task>
     <servers />
   </component>
@@ -105,22 +107,22 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1859" height="363" key="GridCell.Tab.0.bottom" timestamp="1637918437863">
+    <state width="1859" height="93" key="GridCell.Tab.0.bottom" timestamp="1638149629796">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1859" height="363" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1637918437863" />
-    <state width="1859" height="363" key="GridCell.Tab.0.center" timestamp="1637918437862">
+    <state width="1859" height="93" key="GridCell.Tab.0.bottom/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1638149629796" />
+    <state width="1859" height="93" key="GridCell.Tab.0.center" timestamp="1638149629796">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1859" height="363" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1637918437862" />
-    <state width="1859" height="363" key="GridCell.Tab.0.left" timestamp="1637918437862">
+    <state width="1859" height="93" key="GridCell.Tab.0.center/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1638149629796" />
+    <state width="1859" height="93" key="GridCell.Tab.0.left" timestamp="1638149629796">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1859" height="363" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1637918437862" />
-    <state width="1859" height="363" key="GridCell.Tab.0.right" timestamp="1637918437863">
+    <state width="1859" height="93" key="GridCell.Tab.0.left/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1638149629796" />
+    <state width="1859" height="93" key="GridCell.Tab.0.right" timestamp="1638149629796">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1859" height="363" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1637918437863" />
+    <state width="1859" height="93" key="GridCell.Tab.0.right/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1638149629796" />
     <state x="2403" y="162" key="SettingsEditor" timestamp="1637742211495">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -132,6 +134,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/phylogenetic_cnn_master$transfer_learning_runner.coverage" NAME="transfer_learning_runner Coverage Results" MODIFIED="1637743744186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/phylogenetic_cnn_master$phylocnn_runner.coverage" NAME="phylocnn_runner Coverage Results" MODIFIED="1637918437850" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/phylogenetic_cnn_master$phylocnn_runner.coverage" NAME="phylocnn_runner Coverage Results" MODIFIED="1638149629790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
