@@ -304,13 +304,19 @@ class PhyloConv1D(Conv1D):
         Coord = inputs[1]
 
         # Phylo neighbors step
-        neighbor_indexes = _top_k(self.distances, k=self.nb_neighbors)
-        X_phylongb = _gather_target_neighbors(X, neighbor_indexes)
-        Coord_phylongb = _gather_target_neighbors(Coord, neighbor_indexes)
+        # rank ->  select -> top_k
+
+        neighbor_indexes = _top_k(self.distances, k=self.nb_neighbors) # (65, 4, 1) -> (65, 4, 16)
+        X_phylongb = _gather_target_neighbors(X, neighbor_indexes) # (?, 260, 1) - > (?, 260, 16) # X (?, 65, 1) 260 = 4 * 65
+        Coord_phylongb = _gather_target_neighbors(Coord, neighbor_indexes)# (306, 260, 1) -> (306, 260, 16)
 
         # Convolution step
-        X_conv = super(PhyloConv1D, self).call(X_phylongb)
-        C_conv = super(PhyloConv1D, self).call(Coord_phylongb)
+        #     filters=16,
+        #     kernel_size=4,
+        #     strides=4,
+        # 260 -> 步长4， 卷积后得 65
+        X_conv = super(PhyloConv1D, self).call(X_phylongb) # (?, 65, 16) - > (?, 65, 16)
+        C_conv = super(PhyloConv1D, self).call(Coord_phylongb) # (306, 65, 16) -> (306, 65, 16)
 
         outputs = [X_conv, C_conv]
 

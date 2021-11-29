@@ -925,7 +925,6 @@ class DAP(ABC):
                 kfold_indices = mlpy.cv_kfold(n=self.experiment_data.nb_samples,
                                               k=self.cv_k, seed=runstep)
 
-
             if verbose:
                 print('=' * 80)
                 print('{} over {} experiments'.format(runstep + 1, self.cv_n))
@@ -981,8 +980,14 @@ class DAP(ABC):
                     self._feature_step_nb = step
 
                     # 5. Fit and Predict\
-                    model = self.ml_model
+                    #  PhyloDAP._build_network 已重写
+                    # _create_ml_model 定义loss 与 optimizer
+                    # loss='categorical_crossentropy'
+                    # optimizer = Adam
 
+                    model = self.ml_model
+                    # import pdb;pdb.set_trace()
+                    # 重写_fit_predict->_prepare_data(),传递coordinate
                     # 5.1 Train the model and generate predictions (inference)
                     predicted_classes, predicted_class_probs, extra_metrics = \
                         self._fit_predict(model, X_train_fs, y_train, X_val_fs, y_validation)
@@ -994,7 +999,7 @@ class DAP(ABC):
                         print("MCC: {}".format(
                             self.metrics[self.MCC][self._iteration_step_nb, self._feature_step_nb]))
 
-            self._extra_operations_experiment()
+            self._extra_operations_experiment() # reset memory
 
         # Compute Confidence Intervals for all target metrics
         self._compute_metrics_confidence_intervals(k_features_indices)
@@ -1456,6 +1461,8 @@ class DeepLearningDAP(DAP):
         return predicted_classes, predicted_class_probs
 
     def run(self, verbose=False):
+
+        # DAP.run
         dap_model = super(DeepLearningDAP, self).run(verbose)
 
         if verbose:

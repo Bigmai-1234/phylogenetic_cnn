@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6a84a3be-25cd-4f65-8e88-1155f9f9e3d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phylocnn_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/phylocnn_runner.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +97,7 @@
       <option name="presentableId" value="Default" />
       <updated>1637742179763</updated>
       <workItem from="1637742185591" duration="4909000" />
-      <workItem from="1637806879600" duration="13859000" />
+      <workItem from="1637806879600" duration="15080000" />
     </task>
     <servers />
   </component>

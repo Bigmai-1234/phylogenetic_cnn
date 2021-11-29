@@ -68,14 +68,14 @@ class PhyloDAP(DeepLearningDAP):
         # Parameter for output layer
         nb_classes = self.experiment_data.nb_classes
 
-        data = Input(shape=(nb_features, 1), name="data", dtype=floatx()) #[batch, nb_features, 1] = (?, 65, 1)
+        data = Input(shape=(nb_features, 1), name="data", dtype=floatx()) #[, nb_features, 1] = (?, 65, 1)
         coordinates = Input(shape=(nb_coordinates, nb_features, 1),
-                            name="coordinates", dtype=floatx())#[batch, pcs, otus, 1] = (?, 306, 65, 1)
+                            name="coordinates", dtype=floatx())#[, pcs, otus, 1] = (?, 306, 65, 1)
 
         conv_layer = data
 
         # We remove the padding that we added to work around keras limitations
-        conv_crd = Lambda(lambda c: c[0], output_shape=lambda s: (s[1:]))(coordinates) # (306, 65, [1,...16])
+        conv_crd = Lambda(lambda c: c[0], output_shape=lambda s: (s[1:]))(coordinates) # (306, 65, 1)
 
         for nb_filters, nb_neighbors in zip(self.nb_filters, self.phylo_neighbours):
 
@@ -83,12 +83,12 @@ class PhyloDAP(DeepLearningDAP):
                 raise Exception("More neighbors than features, "
                                 "please use less neighbors or use more features")
 
-            distances = euclidean_distances(conv_crd) # (65, 65, [1,...16])
+            distances = euclidean_distances(conv_crd) # (65, 65, [1/16])
             conv_layer, conv_crd = PhyloConv1D(distances,
                                                nb_neighbors,
                                                nb_filters, activation='selu')([conv_layer, conv_crd])
 
-        max = MaxPooling1D(pool_size=2, padding="valid")(conv_layer)
+        max = MaxPooling1D(pool_size=2, padding="valid")(conv_layer) # (?, 32, 16)
         flatt = Flatten()(max)
         drop = Dropout(0.25)(Dense(units=64, activation='selu')(flatt))
         output = Dense(units=nb_classes, kernel_initializer="he_normal",
@@ -197,6 +197,7 @@ class PhyloDAP(DeepLearningDAP):
         if len(self.nb_filters) != len(self.phylo_neighbours):
             raise Exception("nb_convolutional_filters and nb_phylo_neighbours must "
                             "have the same length. Check the config file")
+        # DeepLearningDAP.run
         return super(PhyloDAP, self).run(verbose)
 
     def _save_extra_configuration(self):
@@ -236,10 +237,6 @@ def main():
 
     # dap.save_configuration()
     trained_model = dap.run(verbose=True)
-
-
-
-
 
     dap.predict_on_test(trained_model)
 
