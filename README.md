@@ -7,4 +7,4 @@
 - theano = 1.0.5 
 - mlpy = 3.5.0 
 
-[](../work/read_note.pdf)
+![notes](../work/read_note.pdf)
